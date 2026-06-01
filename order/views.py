@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 
+
 # Create your views here.
 class panel(generic.ListView, LoginRequiredMixin):
     model = OrderModel
@@ -32,7 +33,6 @@ class panel(generic.ListView, LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
         context['current_sort'] = self.request.GET.get('sort', '-created_date')
         return context
-
 
 class ArchivedPanelView(generic.ListView, LoginRequiredMixin):
     model = OrderModel
