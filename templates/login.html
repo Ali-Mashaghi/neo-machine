@@ -1,0 +1,116 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login</title>
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="left-side">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h1>
+                AdminPanel
+            </h1>
+
+        </div>
+
+        <h2>
+            خوش برگشتی 👋
+        </h2>
+
+        <p>
+            برای ورود به پنل مدیریت نام کاربری و رمز عبور خود را وارد کنید.
+        </p>
+
+    </div>
+
+    <div class="right-side">
+
+        <div class="login-box">
+
+            <h2>
+                Login
+            </h2>
+
+            <p class="subtitle">
+                ورود به حساب مدیریت
+            </p>
+
+            {% if form.errors %}
+
+                <div class="error-box">
+                    نام کاربری یا رمز عبور اشتباه است
+                </div>
+
+            {% endif %}
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+
+                    <label>
+                        نام کاربری
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fa-solid fa-user"></i>
+
+                        {{ form.username }}
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        رمز عبور
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        {{ form.password }}
+
+                    </div>
+
+                </div>
+
+                <button type="submit" class="login-btn">
+                    ورود به پنل
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

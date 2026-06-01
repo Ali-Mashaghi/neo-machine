@@ -1,0 +1,379 @@
+﻿{% load static %}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEO Machine | خدمات پیشرفته CNC و لیزر</title>
+    <!-- Google Fonts - کامنت شده برای افزایش سرعت -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"> -->
+
+    <!-- Font Awesome - کامنت شده (در صورت نیاز فعال کنید) -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
+
+    <link rel="stylesheet" href="{% static 'css/home-style.css' %}">
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="container">
+            <div class="header">
+                <div class="admin-btn">
+                    <a href="/login">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>مدیریت</span>
+                    </a>
+                </div>
+                <div class="logo">
+                    <i class="fas fa-microchip"></i>
+                    <h1>NEO MACHINE</h1>
+                </div>
+                <p class="tagline">precision manufacturing • CNC Machining • Laser Engraving • Surface Finishing</p>
+            </div>
+
+            <div class="nav-tabs">
+                <div class="nav-tab active" data-tab="order">
+                    <i class="fas fa-cogs"></i> سفارش جدید
+                </div>
+                <div class="nav-tab" data-tab="info">
+                    <i class="fas fa-info-circle"></i> درباره ما
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="tab-pane active" id="order-tab">
+                    <h2 style="margin-bottom: 25px; color: #1e293b;">✨ نوع خدمات را انتخاب کنید</h2>
+
+                    <div class="services-grid">
+                        <div class="service-card" data-service="cnc_turning">
+                            <div class="check-mark"><i class="fas fa-check"></i></div>
+                            <div class="service-icon">🔩</div>
+                            <h3>CNC تراشکاری</h3>
+                            <p>قطعات استوانه‌ای با دقت میکرون</p>
+                        </div>
+                        <div class="service-card" data-service="cnc_milling">
+                            <div class="check-mark"><i class="fas fa-check"></i></div>
+                            <div class="service-icon">⚙️</div>
+                            <h3>CNC فرزکاری</h3>
+                            <p>سه، چهار و پنج محور</p>
+                        </div>
+                        <div class="service-card" data-service="anodizing">
+                            <div class="check-mark"><i class="fas fa-check"></i></div>
+                            <div class="service-icon">🎨</div>
+                            <h3>آنادایزینگ</h3>
+                            <p>انواع رنگ • مقاومت به خوردگی</p>
+                        </div>
+                        <div class="service-card" data-service="laser_engraving">
+                            <div class="check-mark"><i class="fas fa-check"></i></div>
+                            <div class="service-icon">🔫</div>
+                            <h3>لیزر هک</h3>
+                            <p>حکاکی دقیق • فلز، چوب، پلاستیک</p>
+                            <span class="badge">🔥 جدید</span>
+                        </div>
+                    </div>
+
+                    <div class="customer-form" id="customerForm">
+                        <h3 style="margin-bottom: 20px; color: #1e293b;">
+                            <i class="fas fa-user-plus"></i> اطلاعات سفارش‌دهنده
+                        </h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> نام و نام خانوادگی <span class="required-star">*</span></label>
+                                <input type="text" id="customerName" placeholder="مثال: علی محمدی">
+                                <div class="error-message" id="errorName">لطفاً نام خود را وارد کنید</div>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-phone"></i> شماره تماس <span class="required-star">*</span></label>
+                                <input type="tel" id="customerPhone" placeholder="0912 123 4567">
+                                <div class="error-message" id="errorPhone">لطفاً شماره تماس خود را وارد کنید</div>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-cube"></i> تعداد قطعه <span class="required-star">*</span></label>
+                                <input type="number" id="quantity" value="1" min="1">
+                                <div class="error-message" id="errorQuantity">تعداد قطعه باید حداقل 1 باشد</div>
+                            </div>
+                            <div class="form-group" id="materialGroup">
+                                <label><i class="fas fa-industry"></i> نوع متریال <span class="required-star">*</span></label>
+                                <select id="material">
+                                    <option value="">انتخاب کنید</option>
+                                    <option value="aluminum">آلومینیوم</option>
+                                    <option value="steel">فولاد ساده</option>
+                                    <option value="stainless">استنلس استیل</option>
+                                    <option value="brass">برنج</option>
+                                    <option value="copper">مس</option>
+                                    <option value="titanium">تیتانیوم</option>
+                                    <option value="plastic">پلاستیک</option>
+                                    <option value="wood">چوب</option>
+                                    <option value="other">سایر مواد</option>
+                                </select>
+                                <div class="error-message" id="errorMaterial">لطفاً نوع متریال را انتخاب کنید</div>
+                            </div>
+
+                            <!-- پارامترهای اختصاصی آنادایز -->
+                            <div class="form-group full-width" id="anodizingParamsGroup" style="display: none;">
+                                <div class="form-group" style="margin-bottom: 15px;">
+                                    <label><i class="fas fa-shapes"></i> شکل قطعه <span class="required-star">*</span></label>
+                                    <select id="partShape">
+                                        <option value="">انتخاب کنید</option>
+                                        <option value="solid_cube">مکعب توپر</option>
+                                        <option value="hollow_box">باکس توخالی (بدون یک وجه)</option>
+                                        <option value="solid_cylinder">استوانه توپر</option>
+                                        <option value="hollow_cylinder">استوانه توخالی</option>
+                                    </select>
+                                    <div class="error-message" id="errorPartShape">لطفاً شکل قطعه را انتخاب کنید</div>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-sun"></i> پرداخت سطح <span class="required-star">*</span></label>
+                                    <select id="surfaceFinish">
+                                        <option value="">انتخاب کنید</option>
+                                        <option value="glossy">براق (Glossy)</option>
+                                        <option value="matte">مات (Matte)</option>
+                                    </select>
+                                    <div class="error-message" id="errorSurfaceFinish">لطفاً نوع پرداخت سطح را انتخاب کنید</div>
+                                </div>
+                            </div>
+
+                            <!-- پارامترهای اختصاصی لیزر -->
+                            <div class="form-group full-width" id="laserParamsGroup" style="display: none;">
+                                <div class="form-group">
+                                    <label><i class="fas fa-ruler"></i> عمق حکاکی <span class="required-star">*</span></label>
+                                    <select id="laserDepth">
+                                        <option value="">انتخاب کنید</option>
+                                        <option value="shallow">سطحی</option>
+                                        <option value="medium">نیمه عمیق</option>
+                                        <option value="deep">عمیق</option>
+                                    </select>
+                                    <div class="error-message" id="errorLaserDepth">لطفاً عمق حکاکی را انتخاب کنید</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width" id="anodizingColorGroup" style="display: none;">
+                                <label><i class="fas fa-palette"></i> رنگ آنادایز <span class="required-star" id="anodizingRequiredStar">*</span></label>
+                                <div class="color-grid" id="colorGrid">
+                                    <div class="color-option" data-color="سبز">
+                                        <div class="color-box" style="background: linear-gradient(135deg, #10b981, #059669);"></div>
+                                        <span>سبز</span>
+                                    </div>
+                                    <div class="color-option" data-color="آبی">
+                                        <div class="color-box" style="background: linear-gradient(135deg, #3b82f6, #2563eb);"></div>
+                                        <span>آبی</span>
+                                    </div>
+                                    <div class="color-option" data-color="قرمز">
+                                        <div class="color-box" style="background: linear-gradient(135deg, #ef4444, #dc2626);"></div>
+                                        <span>قرمز</span>
+                                    </div>
+                                    <div class="color-option" data-color="سیلور">
+                                        <div class="color-box" style="background: linear-gradient(135deg, #e2e8f0, #cbd5e1);"></div>
+                                        <span>سیلور</span>
+                                    </div>
+                                    <div class="color-option" data-color="بنفش_آبی">
+                                        <div class="color-box" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);"></div>
+                                        <span>بنفش آبی</span>
+                                    </div>
+                                    <div class="color-option" data-color="بنفش_قرمز">
+                                        <div class="color-box" style="background: linear-gradient(135deg, #c084fc, #7e22ce);"></div>
+                                        <span>بنفش قرمز</span>
+                                    </div>
+                                    <div class="color-option" data-color="طلایی">
+                                        <div class="color-box" style="background: linear-gradient(135deg, #fbbf24, #d97706);"></div>
+                                        <span>طلایی</span>
+                                    </div>
+                                    <div class="color-option" data-color="مشکی">
+                                        <div class="color-box" style="background: linear-gradient(135deg, #1e293b, #0f172a);"></div>
+                                        <span>مشکی</span>
+                                    </div>
+                                    <div class="color-option" data-color="مشکی هارد">
+                                        <div class="color-box" style="background: linear-gradient(135deg, #0f172a, #020617); border: 1px solid #334155;"></div>
+                                        <span>مشکی هارد</span>
+                                    </div>
+                                    <div class="color-option" data-color="زیتونی هارد">
+                                        <div class="color-box" style="background: linear-gradient(135deg, #4d7c0f, #3f6212);"></div>
+                                        <span>زیتونی هارد</span>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="anodizingColor" value="">
+                                <div class="error-message" id="errorColor">لطفاً رنگ آنادایز را انتخاب کنید</div>
+                            </div>
+
+                            <div class="form-group full-width" id="dimensionsContainer">
+                                <label><i class="fas fa-arrows-alt"></i> ابعاد قطعه <span class="required-star">*</span></label>
+                                <div id="dimensionsFields"></div>
+                                <div class="error-message" id="errorDimensions">لطفاً تمام ابعاد را وارد کنید</div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label><i class="fas fa-align-right"></i> توضیحات اضافی <span class="optional-text">(اختیاری)</span></label>
+                                <textarea id="description" rows="3" placeholder="توضیحات مورد نظر خود را وارد کنید (نوع فرآیند، تلرانس‌ها، نیازهای خاص و ...)" style="resize: vertical;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="upload-area" id="uploadArea">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <h3>📁 آپلود فایل CAD، تصویر یا فایل فشرده</h3>
+                        <p>STEP, STL, IGES, 3MF, STP, DXF, AI, PDF, JPG, PNG, GIF, BMP, RAR, ZIP • حداکثر 100MB</p>
+                        <div class="error-message" id="errorFile" style="text-align: center; margin-top: 10px;">لطفاً فایل خود را آپلود کنید</div>
+                        <input type="file" id="fileInput" accept=".stl,.step,.stp,.iges,.igs,.3mf,.dxf,.ai,.pdf,.jpg,.jpeg,.png,.gif,.bmp,.rar,.zip" style="display: none;">
+                        <div class="file-info" id="fileInfo">
+                            <i class="fas fa-file"></i>
+                            <span id="fileName"></span>
+                            <button onclick="clearFile()" style="background: none; border: none; color: #0284c7; cursor: pointer;"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="upload-progress" id="uploadProgress">
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" id="progressBarFill"></div>
+                            </div>
+                            <div class="progress-text" id="progressText">در حال آپلود...</div>
+                        </div>
+                    </div>
+
+                    <button class="submit-btn" id="submitBtn" disabled>
+                        <i class="fas fa-calculator"></i> ثبت درخواست
+                    </button>
+
+                    <div class="loading-spinner" id="loading">
+                        <div class="spinner"></div>
+                        <p style="margin-top: 15px;">در حال ثبت سفارش و آنالیز فایل...</p>
+                    </div>
+
+                    <div class="result-card" id="resultCard">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                            <i class="fas fa-check-circle" style="font-size: 32px;"></i>
+                            <h2 style="margin: 0;">✅ درخواست شما با موفقیت ثبت شد</h2>
+                        </div>
+                        <div class="detail-row"><span>🔢 شماره سفارش</span><strong id="resultOrderNumber" style="direction: ltr; font-family: monospace; font-size: 16px;"></strong></div>
+                        <div class="detail-row"><span>👤 نام مشتری</span><strong id="resultCustomer"></strong></div>
+                        <div class="detail-row"><span>📌 نوع خدمات</span><strong id="resultService"></strong></div>
+                        <div class="detail-row"><span>📄 نام فایل</span><strong id="resultFile" style="direction: ltr;"></strong></div>
+                        <div class="detail-row"><span>🔢 تعداد قطعه</span><strong id="resultQuantity"></strong></div>
+                        <div class="detail-row"><span>🧪 نوع متریال</span><strong id="resultMaterial"></strong></div>
+                        <div class="detail-row" id="resultColorRow" style="display: none;"><span>🎨 رنگ آنادایز</span><strong id="resultColor"></strong></div>
+                        <div class="detail-row" id="resultShapeRow" style="display: none;"><span>🔷 شکل قطعه</span><strong id="resultShape"></strong></div>
+                        <div class="detail-row" id="resultFinishRow" style="display: none;"><span>✨ پرداخت سطح</span><strong id="resultFinish"></strong></div>
+                        <div class="detail-row" id="resultLaserDepthRow" style="display: none;"><span>🔪 عمق حکاکی</span><strong id="resultLaserDepth"></strong></div>
+                        <div class="detail-row"><span>📏 ابعاد (میلی‌متر)</span><strong id="resultDimensions"></strong></div>
+                        <div class="detail-row" id="resultDescRow" style="display: none;"><span>📝 توضیحات</span><strong id="resultDescription" style="white-space: normal; word-break: break-word;"></strong></div>
+
+                        <div id="priceEstimateSection" style="display: none;">
+                            <div class="price-tag">💰 قیمت کل: <span id="resultPrice">0</span> <small>تومان</small></div>
+                            <div class="detail-row"><span>💵 قیمت هر قطعه</span><strong id="resultUnitPrice"></strong></div>
+                            <div class="detail-row" id="discountRow" style="display: none;"><span>🏷️ تخفیف تعداد</span><strong id="resultDiscount"></strong></div>
+                            <div class="detail-row"><span>⏱ زمان تحویل تخمینی</span><strong id="resultDays"></strong></div>
+                            <div class="info-box">
+                                <i class="fas fa-info-circle"></i>
+                                <p>⚠️ قیمت‌ها و زمان تحویل به صورت تقریبی می‌باشد.<br>
+                                کارشناسان ما در کوتاه‌ترین زمان ممکن با شما تماس خواهند گرفت و جزئیات نهایی را هماهنگ خواهند کرد.</p>
+                            </div>
+                        </div>
+
+                        <div id="contactMessageSection" style="display: none;">
+                            <div class="info-box">
+                                <i class="fas fa-phone-alt"></i>
+                                <p>📞 درخواست شما با موفقیت ثبت شد.<br>
+                                کارشناسان ما در کوتاه‌ترین زمان ممکن با شما تماس خواهند گرفت و قیمت و زمان تحویل دقیق را اعلام خواهند کرد.</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 15px; margin-top: 20px;">
+                            <button class="new-order-btn" onclick="resetForm()" style="flex: 1;">
+                                <i class="fas fa-plus-circle"></i> ثبت درخواست جدید
+                            </button>
+                            <!-- دکمه دانلود رسید PDF - کامنت شده موقتا -->
+                            <!--
+                            <button class="new-order-btn" id="downloadReceiptBtn" onclick="downloadReceipt()" style="flex: 1; background: #3b82f6; color: white;">
+                                <i class="fas fa-file-pdf"></i> دانلود رسید PDF
+                            </button>
+                            -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="info-tab">
+                    <div style="text-align: center; padding: 40px;">
+                        <i class="fas fa-cogs" style="font-size: 80px; color: #3b82f6; margin-bottom: 20px;"></i>
+                        <h2 style="color: #1e293b; margin-bottom: 15px;">NEO Machine</h2>
+                        <p style="color: #475569; line-height: 1.8; max-width: 600px; margin: 0 auto;">
+                            پیشرو در ارائه خدمات ماشین‌کاری دقیق CNC، حکاکی لیزری و پرداخت‌های سطحی آنادایزینگ
+                        </p>
+                        <div style="margin-top: 30px; text-align: right; max-width: 400px; margin: 30px auto;">
+                            <h3 style="color: #1e293b; margin-bottom: 15px;">خدمات ما:</h3>
+                            <ul style="list-style: none; color: #475569; line-height: 2;">
+                                <li><i class="fas fa-check-circle" style="color: #10b981;"></i> CNC تراشکاری با دقت ±0.005mm</li>
+                                <li><i class="fas fa-check-circle" style="color: #10b981;"></i> CNC فرزکاری 3، 4 و 5 محور</li>
+                                <li><i class="fas fa-check-circle" style="color: #10b981;"></i> آنادایزینگ در انواع رنگ‌ها</li>
+                                <li><i class="fas fa-check-circle" style="color: #10b981;"></i> حکاکی لیزری روی فلز، چوب و پلاستیک</li>
+                                <li><i class="fas fa-check-circle" style="color: #10b981;"></i> تحویل 24 ساعته برای پروژه‌های فوری</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clients-section">
+            <h3>
+                <i class="fas fa-handshake" style="color: #3b82f6;"></i>
+                اعتماد شرکت‌های بزرگ
+                <i class="fas fa-chart-line" style="color: #10b981;"></i>
+            </h3>
+            <div class="clients-grid" id="clientsGrid"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <h3 style="margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-phone-alt"></i> Contact Us
+            </h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 30px;">
+                <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 16px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
+                        <i class="fas fa-building" style="font-size: 24px; color: #60a5fa;"></i>
+                        <h4 style="margin: 0; font-size: 18px;">دفتر مرکزی</h4>
+                    </div>
+                    <p style="margin: 10px 0; line-height: 1.6; opacity: 0.9; display: flex; align-items: start; gap: 10px;">
+                        <i class="fas fa-map-marker-alt" style="margin-top: 3px; color: #60a5fa;"></i>
+                        تهران، اشرفی اصفهانی، خیابان اقبالپور، کوهسار 17 مرکزی
+                    </p>
+                </div>
+                <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 16px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
+                        <i class="fas fa-industry" style="font-size: 24px; color: #60a5fa;"></i>
+                        <h4 style="margin: 0; font-size: 18px;">کارخانه</h4>
+                    </div>
+                    <p style="margin: 10px 0; line-height: 1.6; opacity: 0.9; display: flex; align-items: start; gap: 10px;">
+                        <i class="fas fa-map-marker-alt" style="margin-top: 3px; color: #60a5fa;"></i>
+                        شهرک صنعتی پرند، خیابان گلزار، کوچه گل آذین، پلاک 10
+                    </p>
+                </div>
+                <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 16px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
+                        <i class="fas fa-headset" style="font-size: 24px; color: #60a5fa;"></i>
+                        <h4 style="margin: 0; font-size: 18px;">راه‌های ارتباطی</h4>
+                    </div>
+                    <p style="margin: 10px 0; display: flex; align-items: center; gap: 10px; direction: ltr; justify-content: flex-end;">
+                        <span>09122002853</span>
+                        <i class="fas fa-phone" style="color: #60a5fa;"></i>
+                    </p>
+                    <p style="margin: 10px 0; display: flex; align-items: center; gap: 10px; direction: ltr; justify-content: flex-end;">
+                        <span>info@reactivemetal.com</span>
+                        <i class="fas fa-envelope" style="color: #60a5fa;"></i>
+                    </p>
+                </div>
+            </div>
+
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; margin-top: 10px; text-align: center; opacity: 0.7; font-size: 14px;">
+                <p>© 2024 NEO Machine - تمامی حقوق محفوظ است</p>
+                <div style="margin-top: 10px; display: flex; justify-content: center; gap: 20px;">
+                    <a href="#" style="color: white; text-decoration: none;"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" style="color: white; text-decoration: none;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: white; text-decoration: none;"><i class="fab fa-telegram"></i></a>
+                    <a href="#" style="color: white; text-decoration: none;"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="{% static 'js/home.js' %}"></script>
+</body>
+</html>

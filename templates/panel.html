@@ -1,0 +1,77 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>داشبورد سفارش‌ها</title>
+</head>
+<body>
+    <div class="container">
+        <div class="table-header">
+            <div>
+                <h2>لیست سفارش‌ها</h2>
+                <p class="subtitle">جدیدترین سفارش‌ها را بررسی کنید و جزئیات هر سفارش را باز کنید.</p>
+            </div>
+            <div class="panel-actions">
+                <div class="panel-summary">
+                    <span class="summary-label">تعداد سفارش‌ها</span>
+                    <strong class="summary-value">{{ orders|length }}</strong>
+                </div>
+                <form method="get" class="sort-form">
+                    <label for="sort">مرتب‌سازی:</label>
+                    <select id="sort" name="sort" onchange="this.form.submit()">
+                        <option value="-created_date" {% if current_sort == '-created_date' %}selected{% endif %}>جدیدترین</option>
+                        <option value="created_date" {% if current_sort == 'created_date' %}selected{% endif %}>قدیمی‌ترین</option>
+                        <option value="customer_name" {% if current_sort == 'customer_name' %}selected{% endif %}>نام مشتری</option>
+                        <option value="service" {% if current_sort == 'service' %}selected{% endif %}>نوع سرویس</option>
+                        <option value="piece_count" {% if current_sort == 'piece_count' %}selected{% endif %}>تعداد قطعه</option>
+                        <option value="phone" {% if current_sort == 'phone' %}selected{% endif %}>تلفن</option>
+                    </select>
+                </form>
+                <a class="btn btn-secondary" href="{% url 'archive_panel' %}">سفارش‌های بایگانی شده</a>
+            </div>
+        </div>
+
+        <div class="table-wrap">
+            <table class="order-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>نام مشتری</th>
+                        <th>تلفن</th>
+                        <th>سرویس</th>
+                        <th>متریال</th>
+                        <th>تعداد</th>
+                        <th>وضعیت</th>
+                        <th>جزئیات</th>
+                        <th>ثبت</th>
+                        <th>ویرایش</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr class="order-row" onclick="window.location.href='{% url 'order_detail' order.id %}'">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ order.customer_name }}</td>
+                        <td>{{ order.phone }}</td>
+                        <td>{{ order.service.service }}</td>
+                        <td>{{ order.material }}</td>
+                        <td>{{ order.piece_count }}</td>
+                        <td>{{ order.get_status_display }}</td>
+                        <td><a class="detail-link" href="{% url 'order_detail' order.id %}">مشاهده</a></td>
+                        <td>{{ order.created_date }}</td>
+                        <td>{{ order.update_date }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="9" class="empty-state">سفارشی برای نمایش وجود ندارد.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

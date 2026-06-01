@@ -1,0 +1,127 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>جزئیات سفارش #{{ order.id }}</title>
+</head>
+<body>
+    <div class="container detail-page">
+        <div class="detail-header">
+            <div>
+                {% if order.is_archived %}
+                <span class="page-badge">آرشیو شده</span>
+                {% endif %}
+                <h1>جزئیات سفارش #{{ order.id }}</h1>
+                <p class="subtitle">اطلاعات سفارش، وضعیت، فایل و مشخصات فنی به صورت مرتب نمایش داده شده است.</p>
+            </div>
+            <div class="detail-header-actions">
+                <span class="detail-chip">سرویس: {{ order.service.service }}</span>
+                <a class="btn" href="{% url 'panel' %}">بازگشت به پنل</a>
+            </div>
+        </div>
+
+        <div class="status-card">
+            <form class="status-form" method="post" action="{% url 'order_update_status' order.id %}">
+                {% csrf_token %}
+                <label for="status">وضعیت سفارش:</label>
+                <select id="status" name="status">
+                    <option value="pending" {% if order.status == 'pending' %}selected{% endif %}>در حال انجام</option>
+                    <option value="done" {% if order.status == 'done' %}selected{% endif %}>تمام شده</option>
+                </select>
+                <button type="submit" class="btn btn-secondary">ذخیره وضعیت</button>
+            </form>
+        </div>
+
+        <div class="order-detail-layout">
+            <aside class="detail-sidebar">
+                <section class="section-card">
+                    <h2 class="section-title">اطلاعات مشتری</h2>
+                    <dl class="detail-list">
+                        <div><dt>نام مشتری</dt><dd>{{ order.customer_name }}</dd></div>
+                        <div><dt>تلفن</dt><dd>{{ order.phone }}</dd></div>
+                        <div><dt>متریال</dt><dd>{{ order.material }}</dd></div>
+                        <div><dt>تعداد قطعه</dt><dd>{{ order.piece_count }}</dd></div>
+                    </dl>
+                </section>
+
+                <section class="section-card">
+                    <h2 class="section-title">زمان و وضعیت</h2>
+                    <dl class="detail-list">
+                        <div><dt>تاریخ ثبت</dt><dd>{{ order.created_date }}</dd></div>
+                        <div><dt>آخرین ویرایش</dt><dd>{{ order.update_date }}</dd></div>
+                        <div><dt>وضعیت سفارش</dt><dd>{{ order.get_status_display }}</dd></div>
+                    </dl>
+                </section>
+            </aside>
+
+            <main class="detail-main">
+                <section class="section-card">
+                    <h2 class="section-title">خلاصه سفارش</h2>
+                    <p class="section-text">{{ order.detail_summary }}</p>
+                </section>
+
+                <section class="section-card">
+                    <h2 class="section-title">فایل سفارش</h2>
+                    <div class="file-card">
+                        {% if file_url %}
+                            {% if is_image %}
+                                <a href="{{ file_url }}" target="_blank">
+                                    <img src="{{ file_url }}" alt="فایل سفارش" style="max-width:100%; border-radius:12px; display:block;" />
+                                </a>
+                                <div style="margin-top:10px;"><a class="file-link" href="{{ file_url }}" target="_blank">دانلود فایل ({{ file_name }})</a></div>
+                            {% else %}
+                                <a class="file-link" href="{{ file_url }}" target="_blank">دانلود فایل سفارش ({{ file_name }})</a>
+                            {% endif %}
+                        {% else %}
+                            <p class="file-empty">فایلی بارگذاری نشده است.</p>
+                        {% endif %}
+                    </div>
+                </section>
+
+                {% if order.additional_description %}
+                <section class="section-card">
+                    <h2 class="section-title">توضیحات اضافی</h2>
+                    <p class="section-text">{{ order.additional_description }}</p>
+                </section>
+                {% endif %}
+
+                {% if order.Anodizing_data %}
+                <section class="section-card">
+                    <h2 class="section-title">مشخصات آنادایز</h2>
+                    <dl class="detail-list">
+                        <div><dt>رنگ</dt><dd>{{ order.Anodizing_data.color }}</dd></div>
+                        <div><dt>شکل</dt><dd>{{ order.Anodizing_data.anodizing_shape }}</dd></div>
+                        <div><dt>پرداخت سطح</dt><dd>{{ order.Anodizing_data.PardakhtSath }}</dd></div>
+                        <div><dt>ابعاد</dt><dd>{{ order.Anodizing_data.width_mm }} × {{ order.Anodizing_data.Lenght_mm }} × {{ order.Anodizing_data.height_mm }} mm</dd></div>
+                    </dl>
+                </section>
+                {% endif %}
+
+                {% if order.CNC_data %}
+                <section class="section-card">
+                    <h2 class="section-title">مشخصات CNC</h2>
+                    <dl class="detail-list">
+                        <div><dt>متریال</dt><dd>{{ order.CNC_data.material }}</dd></div>
+                        <div><dt>ابعاد</dt><dd>{{ order.CNC_data.width_mm }} × {{ order.CNC_data.Lenght_mm }} × {{ order.CNC_data.height_mm }} mm</dd></div>
+                    </dl>
+                </section>
+                {% endif %}
+
+                {% if order.LaserHack_data %}
+                <section class="section-card">
+                    <h2 class="section-title">مشخصات لیزر</h2>
+                    <dl class="detail-list">
+                        <div><dt>متریال</dt><dd>{{ order.LaserHack_data.material }}</dd></div>
+                        <div><dt>عمق حکاکی</dt><dd>{{ order.LaserHack_data.Engraving_depth }}</dd></div>
+                        <div><dt>ابعاد</dt><dd>{{ order.LaserHack_data.width_mm }} × {{ order.LaserHack_data.Lenght_mm }} mm</dd></div>
+                    </dl>
+                </section>
+                {% endif %}
+            </main>
+        </div>
+    </div>
+</body>
+</html>
