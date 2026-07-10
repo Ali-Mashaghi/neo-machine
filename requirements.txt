@@ -6,3 +6,5 @@ tzdata==2026.2
 gunicorn
 psycopg2-binary
 python-decouple
+psycopg
+psycopg2
